@@ -1,174 +1,172 @@
 # 🏢 Enterprise Active Directory Lab
 
-## 📌 Project Overview
+> **Windows Server · Active Directory DS · Group Policy · NTFS · File Server · VMware**
 
-This project simulates a **real-world enterprise IT environment** using **Active Directory Domain Services (AD DS)**, **File Server**, and **Group Policy (GPO)**.
+![Status](https://img.shields.io/badge/Status-Completed-2ea44f?style=flat-square)
+![Platform](https://img.shields.io/badge/Platform-Windows%20Server-0078D4?style=flat-square&logo=windows)
+![Tool](https://img.shields.io/badge/Virtualization-VMware%20Workstation-607078?style=flat-square)
+![Type](https://img.shields.io/badge/Lab-Enterprise%20Simulation-6e40c9?style=flat-square)
 
-It demonstrates how to design, deploy, and secure a Windows domain infrastructure with centralized management and access control.
+---
+
+## 📌 Overview
+
+This project simulates a **real-world enterprise IT environment** built from scratch in an isolated virtual lab.
+
+It covers the full lifecycle of a Windows domain infrastructure: Active Directory design, secure file server configuration, Group Policy enforcement, and end-to-end validation — directly applicable to **IT Support**, **Junior Sysadmin**, and **Network Administrator** roles.
 
 ---
 
 ## 🧱 Lab Architecture
 
-* **Domain Controller:** Windows Server
-* **Client Machine:** Windows 10
-* **Network Type:** Host-only (isolated lab)
+| Component | Details |
+|---|---|
+| Domain Controller | Windows Server (AD DS) |
+| Client Machine | Windows 10 |
+| Network Type | Host-only — isolated internal lab |
+| Virtualization | VMware Workstation |
 
 ---
 
 ## ⚙️ Technologies & Tools
 
-* VMware Workstation
-* Windows Server
-* Windows 10
-* Active Directory (AD DS)
-* Group Policy (GPO)
-* NTFS Permissions
-* File Sharing (SMB)
+`Active Directory DS` · `Group Policy (GPO)` · `NTFS Permissions` · `SMB / File Sharing` · `Windows Server` · `Windows 10` · `VMware Workstation` · `DNS`
 
 ---
 
-# 🔹 Part 1: Active Directory Structure
+## 🗂️ Project Structure
 
-## 🏢 Organizational Units & Users
+```
+Lab
+├── Part 1 — Active Directory Structure (OUs + Users)
+├── Part 2 — File Server Configuration (NTFS Permissions)
+├── Part 3 — Group Policy (GPO Enforcement)
+└── Part 4 — Testing & Validation
+```
 
-### 🖥️ Screen 1: Organizational Units
+---
 
-Creation of Organizational Units to structure the enterprise:
+## 🔹 Part 1 — Active Directory Structure
 
-* IT
-* HR
-* Finance
+### Organizational Units
+
+Created a structured OU hierarchy to mirror a real enterprise:
+
+| OU | Users |
+|---|---|
+| IT | `it.admin` · `it.support` |
+| HR | `hr.manager` · `hr.agent` |
+| Finance | `fin.manager` · `fin.agent` |
+
+> 📸 **Screen 1** — OU structure in Active Directory Users and Computers
 
 ![Organizational Units](./s1-ou.png)
 
----
-
-### 🖥️ Screen 2: Users Creation
-
-Creation of domain users for each department.
-
-#### 🔧 IT Department
-
-* it.admin
-* it.support
+> 📸 **Screen 2** — Domain users created per department
 
 ![IT Users](./s2-it.png)
-
-#### 👥 HR Department
-
-* hr.manager
-* hr.agent
-
 ![HR Users](./s2-hr.png)
-
-#### 💰 Finance Department
-
-* fin.manager
-* fin.agent
-
 ![Finance Users](./s2-finance.png)
 
 ---
 
-# 🔹 Part 2: File Server Configuration
+## 🔹 Part 2 — File Server Configuration
 
-## 📂 Folder Structure
+### Folder Structure
 
-### 🖥️ Screen 3: Company Folder
+Centralized file storage with department-level isolation:
 
-Centralized structure:
+```
+C:\Company\
+├── IT\
+├── HR\
+└── Finance\
+```
 
-* `C:\Company\IT`
-* `C:\Company\HR`
-* `C:\Company\Finance`
+> 📸 **Screen 3** — Company folder structure
 
 ![Folder Structure](./s3-folders.png)
 
----
+### NTFS Permissions
 
-### 🖥️ Screen 4: NTFS Permissions
+Applied the **principle of least privilege**:
 
-Implementation of secure access control:
+- Each department accesses **only its own folder**
+- Cross-department access is **explicitly denied**
 
-* Each department accesses only its folder
-* Access between departments is restricted
+> 📸 **Screen 4** — NTFS permission configuration
 
 ![NTFS Permissions](./s4-permissions.png)
 
 ---
 
-# 🔹 Part 3: Group Policy (GPO)
+## 🔹 Part 3 — Group Policy (GPO)
 
-### 🖥️ Screen 5: GPO Configuration
+| GPO Name | Target OU | Restriction Applied |
+|---|---|---|
+| HR-Policy | HR | Block Control Panel access |
 
-* Created GPO: **HR-Policy**
-* Applied restriction: **Block Control Panel access**
+> 📸 **Screen 5** — GPO creation and linking in Group Policy Management Console
 
 ![GPO Configuration](./s5-gpo.png)
 
 ---
 
-# 🔹 Part 4: Testing & Validation
+## 🔹 Part 4 — Testing & Validation
 
-## 🧪 Functional Testing
+All configurations were verified through functional testing:
 
-### 🖥️ Screen 6.1: GPO Enforcement
+| Test | Result |
+|---|---|
+| GPO enforcement — Control Panel blocked | ✅ Pass |
+| `gpupdate /force` policy refresh | ✅ Pass |
+| `ping lab.local` DNS resolution | ✅ Pass |
+| Domain login with restricted user | ✅ Pass |
 
-* Control Panel access is blocked
-* Restriction message displayed
+> 📸 **Screen 6.1** — Control Panel access blocked by GPO
 
 ![GPO Restriction](./s6-1-restriction.png)
 
----
-
-### 🖥️ Screen 6.2: Policy & Network Test
-
-* `gpupdate /force` successful
-* `ping lab.local` successful
+> 📸 **Screen 6.2** — `gpupdate /force` + ping test
 
 ![Policy Test](./s6-2-gpupdate.png)
 
----
-
-### 🖥️ Screen 6.3: Domain Login
-
-* Successful login using domain user
-* Policies applied correctly
+> 📸 **Screen 6.3** — Successful domain login with policies applied
 
 ![Domain Login](./s6-3-login.png)
 
 ---
 
-# ✅ Key Achievements
+## ✅ Key Achievements
 
-* Designed and deployed a complete **Active Directory environment**
-* Implemented **Organizational Units and user management**
-* Configured **NTFS permissions for secure file access**
-* Applied **Group Policy for centralized control**
-* Performed **real-world testing and validation**
-
----
-
-# 🎯 Skills Demonstrated
-
-* Windows Server Administration
-* Active Directory Management
-* Group Policy Configuration
-* File Server & Permissions
-* Network Troubleshooting (DNS, Connectivity)
-* Security & Access Control
+- Designed and deployed a complete **Active Directory domain environment**
+- Structured domain with **Organizational Units** and **6 domain users**
+- Implemented **NTFS permissions** following least-privilege principles
+- Created and enforced **Group Policy Objects** for centralized control
+- Performed full **functional testing and validation** of all configurations
 
 ---
 
-# 📌 Conclusion
+## 🎯 Skills Demonstrated
 
-This project demonstrates the ability to build and manage a **secure enterprise-level infrastructure** using Microsoft technologies.
-
-It reflects strong skills required for:
-
-* IT Support Technician
-* Junior System Administrator
-* Network Administrator
+| Category | Skills |
+|---|---|
+| Windows Administration | Windows Server, AD DS, DNS, Domain Management |
+| Security & Access Control | NTFS Permissions, GPO, Least Privilege |
+| File Services | SMB, File Server, Folder Permissions |
+| Networking | DNS Resolution, Connectivity Testing |
+| Virtualization | VMware Workstation, VM Configuration |
 
 ---
+
+## 💼 Target Roles
+
+This project directly demonstrates skills required for:
+
+- **IT Support Technician**
+- **Junior System Administrator**
+- **Network Administrator**
+
+---
+
+*Lab built in an isolated VMware environment — all configurations documented with screenshots and test results.*
